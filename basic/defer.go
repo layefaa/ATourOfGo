@@ -8,5 +8,4 @@ func main() {
 		defer fmt.Println(i)
 	}
 	fmt.Println("done")
-
 }

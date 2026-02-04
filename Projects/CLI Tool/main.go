@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 )
 
 // 2. DEFINE CUSTOM ERRORS
@@ -18,13 +19,20 @@ var ErrTooShort = errors.New("input is too short (min 8 chars)")
 // In Go, we return the data AND the error status simultaneously.
 func validateInput(raw string) (string, error) {
 	// STEP A: Clean the input using strings.TrimSpace
+	cleaned := strings.TrimSpace(raw)
 
 	// STEP B: If string is empty, return "", ErrEmptyInput
+	if cleaned == "" {
+		return "", ErrEmptyInput
+	}
 
 	// STEP C: If len(cleaned) < 8, return "", ErrTooShort
+	if len(cleaned) < 8 {
+		return "", ErrTooShort
+	}
 
 	// STEP D: Return cleaned, nil (nil means no error occurred)
-	return "", nil
+	return cleaned, nil
 }
 
 // 4. THE POINTER FUNCTION (State Modification)
@@ -38,6 +46,7 @@ func sanitizeInPlace(input *string) {
 
 	// STEP: Convert the value at the address to lowercase
 	// Hint: *input = strings.ToLower(*input)
+	*input = strings.ToLower(*input)
 }
 
 // 5. MAIN EXECUTION
